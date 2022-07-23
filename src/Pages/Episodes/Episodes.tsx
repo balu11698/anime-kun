@@ -22,6 +22,7 @@ const Episodes = () => {
   const { id: mal_id } = useParams();
   useEffect(() => {
     dispatch(getAnimeEpisodes(mal_id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   console.log(animeEpisodes);
   return (
