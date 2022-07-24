@@ -1,4 +1,4 @@
-import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import { HashRouter, Outlet, Route, Routes } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import { SContainer } from "./App.styled";
 import Loader from "./Components/Loader/Loader";
@@ -18,7 +18,7 @@ const App = () => {
   return (
     <>
       <GlobalStyles />
-      <BrowserRouter>
+      <HashRouter>
         <NavBar />
         <SContainer>
           <Routes>
@@ -37,7 +37,7 @@ const App = () => {
             </Route>
           </Routes>
         </SContainer>
-      </BrowserRouter>
+      </HashRouter>
       <Loader />
     </>
   );
