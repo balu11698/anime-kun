@@ -3,7 +3,7 @@ import { config, SpringValue, useTransition } from "react-spring";
 import rating from "../../../assets/images/rating.svg";
 import score from "../../../assets/images/score.svg";
 import { Title } from "../../../Constants/Enum";
-import { ITopAnimeData } from "../../../Constants/Interface/topAnime";
+import { IAnimeData } from "../../../Constants/Interface";
 import { useAppSelector } from "../../../Data/ReduxHooks/reduxHooks";
 import {
   SRatingImage,
@@ -16,7 +16,7 @@ import {
   STopAnimeTitle,
 } from "../Home.styled";
 interface TopAnimeHomeProps {
-  details: ITopAnimeData;
+  details: IAnimeData;
   index: number;
   style: { opacity: SpringValue<number> };
 }

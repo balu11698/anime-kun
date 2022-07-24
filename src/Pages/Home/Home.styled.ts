@@ -17,6 +17,10 @@ export const STopAnimeWrapper = styled.div`
   }
 `;
 
+export const STopAnimeHeader = styled.div`
+  font-size: 20px;
+`;
+
 export const STopAnimeCard = styled(animated.div)`
   display: flex;
   height: 75px;
@@ -98,38 +102,4 @@ export const SSeasonPaginationWrapper = styled.div`
 export const SSeasonPagination = styled.div<{ isPage: number }>`
   color: ${(p) => !p.isPage && "#666e76"};
   cursor: ${(p) => p.isPage && "pointer"};
-`;
-
-export const SSeasonAnime = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 150px));
-  grid-gap: 10px;
-  justify-content: space-between;
-  margin-block: 8px;
-`;
-
-export const SSeasonAnimeCard = styled(animated.div)`
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-`;
-
-export const SSeasonAnimeImage = styled.img`
-  width: 150px;
-  height: 225px;
-  border-radius: 5px;
-  transition: all 0.3s ease-in-out;
-  backface-visibility: hidden;
-  -webkit-font-smoothing: subpixel-antialiased;
-  :hover {
-    transform: translateZ(0) scale(1.05);
-  }
-`;
-
-export const SSeasonAnimeTitle = styled(animated.div)`
-  font-size: 14px;
-  overflow: hidden;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  text-overflow: ellipsis;
-  display: -webkit-box;
 `;

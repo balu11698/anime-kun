@@ -6,6 +6,7 @@ import NavBar from "./Components/NavBar/NavBar";
 import AnimeDetails from "./Pages/AnimeDetails/AnimeDetails";
 import Episodes from "./Pages/Episodes/Episodes";
 import Home from "./Pages/Home/Home";
+import TopAnime from "./Pages/TopAnime/TopAnime";
 import AnimeVideos from "./Pages/Videos/AnimeVideos";
 
 const App = () => {
@@ -14,6 +15,7 @@ const App = () => {
     font-family:'Poppins', 'Times New Roman', Times, serif;
     background: #121c20;
     color: white;
+    -webkit-tap-highlight-color: transparent;
   }`;
   return (
     <>
@@ -35,6 +37,7 @@ const App = () => {
               <Route path="episodes" element={<Episodes />} />
               <Route path="videos" element={<AnimeVideos />} />
             </Route>
+            <Route path="top-anime" element={<TopAnime />} />
           </Routes>
         </SContainer>
       </HashRouter>

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { config, useTrail } from "react-spring";
 import rating from "../../assets/images/rating.svg";
 import {
   useAppDispatch,
@@ -24,21 +25,38 @@ const Episodes = () => {
     dispatch(getAnimeEpisodes(mal_id));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const trailSeasonAnime = useTrail(animeEpisodes?.data?.length || 0, {
+    config: {
+      ...config.molasses,
+      duration: animeEpisodes?.data?.length > 50 ? 30 : 60,
+    },
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+  });
+
   console.log(animeEpisodes);
   return (
     <SEpisodesWrapper>
-      {animeEpisodes?.data.map((episode) => (
-        <SEpisodesCard key={episode?.mal_id}>
-          <SEpisodeNumber>{episode?.mal_id}</SEpisodeNumber>
+      {trailSeasonAnime.map((styles, index) => (
+        <SEpisodesCard
+          key={animeEpisodes?.data?.[index]?.mal_id}
+          style={styles}
+        >
+          <SEpisodeNumber>
+            {animeEpisodes?.data?.[index]?.mal_id}
+          </SEpisodeNumber>
           <SEpisodeDetailsWrapper>
-            <div>{episode?.title}</div>
+            <div>{animeEpisodes?.data?.[index]?.title}</div>
             <SEpisodeDetails>
               <SEpisodeRating src={rating} />
-              <div>{episode?.score}</div>
+              <div>{animeEpisodes?.data?.[index]?.score}</div>
               <div>
                 Filler -
-                <SEpisodeFiller isFiller={episode?.filler ? 1 : 0}>
-                  {episode?.filler ? "Yes" : "No"}
+                <SEpisodeFiller
+                  isFiller={animeEpisodes?.data?.[index]?.filler ? 1 : 0}
+                >
+                  {animeEpisodes?.data?.[index]?.filler ? "Yes" : "No"}
                 </SEpisodeFiller>
               </div>
             </SEpisodeDetails>

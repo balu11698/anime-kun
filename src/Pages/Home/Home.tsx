@@ -9,15 +9,12 @@ import { getSeasonalAnimeNow } from "../../Data/Slice/seasonalAnime";
 import { getTopAnimeAiring } from "../../Data/Slice/topAnime.slice";
 import {
   SHomeWrapper,
-  SSeasonAnime,
-  SSeasonAnimeHeader,
   SSeasonAnimeWrapper,
-  SSeasonPagination,
-  SSeasonPaginationWrapper,
+  STopAnimeHeader,
   STopAnimeWrapper,
 } from "./Home.styled";
-import SeasonalAnimeHome from "./SeasonalAnime/SeasonalAnimeHome";
-import TopAnimeHome from "./TopAnime/TopAnimeHome";
+import SeasonalAnimeHome from "./SeasonalAnimeHome/SeasonalAnimeHome";
+import TopAnimeHome from "./TopAnimeHome/TopAnimeHome";
 
 const Home = () => {
   const topAiringAnime = useAppSelector(
@@ -39,63 +36,20 @@ const Home = () => {
   }, [seasonAnimePage]);
 
   const trailTopAnime = useTrail(topAiringAnime?.data?.slice(0, 10).length, {
-    config: { ...config.molasses, duration: 70 },
+    config: { ...config.stiff },
     from: { opacity: 0 },
     to: { opacity: 1 },
   });
-
-  const trailSeasonAnime = useTrail(seasonalAnimeData?.data?.length || 0, {
-    config: { ...config.molasses, duration: 70 },
-    from: { opacity: 0 },
-    to: { opacity: 1 },
-    reset: true,
-  });
-
-  const nextSeasonalAnime = (type: string) => {
-    if (type === "forward") {
-      if (seasonalAnimeData?.pagination?.has_next_page)
-        setSeasonAnimePage(seasonAnimePage + 1);
-    } else if (type === "back") {
-      if (seasonAnimePage !== 1) setSeasonAnimePage(seasonAnimePage - 1);
-    }
-  };
 
   return (
     <SHomeWrapper>
       <SSeasonAnimeWrapper>
-        <>
-          <SSeasonAnimeHeader>
-            <div>Seasonal Anime</div>
-            <SSeasonPaginationWrapper>
-              <SSeasonPagination
-                isPage={seasonAnimePage === 1 ? 0 : 1}
-                onClick={() => nextSeasonalAnime("back")}
-              >
-                {"<"}
-              </SSeasonPagination>
-              <SSeasonPagination
-                isPage={seasonalAnimeData?.pagination?.has_next_page ? 1 : 0}
-                onClick={() => nextSeasonalAnime("forward")}
-              >
-                {">"}
-              </SSeasonPagination>
-            </SSeasonPaginationWrapper>
-          </SSeasonAnimeHeader>
-          <SSeasonAnime>
-            {trailSeasonAnime.map((props, index) => (
-              <SeasonalAnimeHome
-                key={seasonalAnimeData?.data?.[index]?.mal_id}
-                {...{
-                  details: seasonalAnimeData.data?.[index],
-                  style: props,
-                }}
-              />
-            ))}
-          </SSeasonAnime>
-        </>
+        <SeasonalAnimeHome
+          {...{ seasonAnimePage, setSeasonAnimePage, seasonalAnimeData }}
+        />
       </SSeasonAnimeWrapper>
       <STopAnimeWrapper>
-        <div>Top Airing Anime</div>
+        <STopAnimeHeader>Top Airing Anime</STopAnimeHeader>
         {trailTopAnime.map((props, index) => (
           <TopAnimeHome
             key={topAiringAnime?.data?.[index]?.mal_id}

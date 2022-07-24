@@ -1,24 +1,12 @@
-import { IImages } from "./topAnime";
+import { IAnimeData } from ".";
 
 export interface ISeasonalAnimeNow {
   now: ISeasonalAnime[];
 }
 
 export interface ISeasonalAnime {
-  data: ISeasonalAnimeData[];
+  data: IAnimeData[];
   pagination: IPagination;
-}
-
-export interface ISeasonalAnimeData {
-  title: string;
-  title_english: string;
-  score: number;
-  scored_by: number;
-  mal_id: number;
-  episodes: number;
-  url: string;
-  images: IImages;
-  type: string;
 }
 
 export interface IPagination {

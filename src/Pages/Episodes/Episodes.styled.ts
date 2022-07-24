@@ -1,3 +1,4 @@
+import { animated } from "react-spring";
 import styled from "styled-components";
 
 export const SEpisodesWrapper = styled.div`
@@ -7,7 +8,7 @@ export const SEpisodesWrapper = styled.div`
   margin-top: 20px;
 `;
 
-export const SEpisodesCard = styled.div`
+export const SEpisodesCard = styled(animated.div)`
   background-color: #1b2a30;
   padding-inline: 10px;
   border-radius: 5px;
