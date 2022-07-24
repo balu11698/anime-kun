@@ -1,79 +1,112 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import rating from "../../assets/images/rating.svg";
-import score from "../../assets/images/score.svg";
-import { ApiStatus, Title } from "../../Constants/Enum";
-import { ITopAnimeData } from "../../Constants/Interface/topAnime";
+import { useEffect, useState } from "react";
+import { config, useTrail } from "react-spring";
+
 import {
   useAppDispatch,
   useAppSelector,
 } from "../../Data/ReduxHooks/reduxHooks";
+import { getSeasonalAnimeNow } from "../../Data/Slice/seasonalAnime";
 import { getTopAnimeAiring } from "../../Data/Slice/topAnime.slice";
 import {
   SHomeWrapper,
-  SRatingImage,
-  STopAnimeCard,
-  STopAnimeDetails,
-  STopAnimeDetailsWrapper,
-  STopAnimeImage,
-  STopAnimeNumber,
-  STopAnimeScore,
-  STopAnimeTitle,
+  SSeasonAnime,
+  SSeasonAnimeHeader,
+  SSeasonAnimeWrapper,
+  SSeasonPagination,
+  SSeasonPaginationWrapper,
   STopAnimeWrapper,
 } from "./Home.styled";
+import SeasonalAnimeHome from "./SeasonalAnime/SeasonalAnimeHome";
+import TopAnimeHome from "./TopAnime/TopAnimeHome";
 
 const Home = () => {
   const topAiringAnime = useAppSelector(
-    (state) => state.topAnime.topAnimeAiring
+    (state) => state.topAnime.topAnimeAiring.details
   );
-  const language = useAppSelector((state) => state.language.name);
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  useEffect(() => {
-    topAiringAnime.status !== ApiStatus.Success &&
-      dispatch(getTopAnimeAiring());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const [seasonAnimePage, setSeasonAnimePage] = useState(1);
+  const seasonalAnimeData = useAppSelector(
+    (state) => state.seasonAnime.now[seasonAnimePage]
+  );
 
-  const goToAnimeDetails = (anime: ITopAnimeData) => {
-    navigate(`/anime/${anime?.mal_id}`);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (topAiringAnime.data.length === 0) dispatch(getTopAnimeAiring());
+    if (!seasonalAnimeData) {
+      dispatch(getSeasonalAnimeNow(seasonAnimePage));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [seasonAnimePage]);
+
+  const trailTopAnime = useTrail(topAiringAnime?.data?.slice(0, 10).length, {
+    config: { ...config.molasses, duration: 70 },
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+  });
+
+  const trailSeasonAnime = useTrail(seasonalAnimeData?.data?.length || 0, {
+    config: { ...config.molasses, duration: 70 },
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+    reset: true,
+  });
+
+  const nextSeasonalAnime = (type: string) => {
+    if (type === "forward") {
+      if (seasonalAnimeData?.pagination?.has_next_page)
+        setSeasonAnimePage(seasonAnimePage + 1);
+    } else if (type === "back") {
+      if (seasonAnimePage !== 1) setSeasonAnimePage(seasonAnimePage - 1);
+    }
   };
-  console.log(topAiringAnime);
 
   return (
     <SHomeWrapper>
-      {topAiringAnime.status === ApiStatus.Success && (
-        <STopAnimeWrapper>
-          <div>Top Airing Anime</div>
-          {topAiringAnime.status === ApiStatus.Success &&
-            topAiringAnime?.details?.data?.slice(0, 10).map((anime, index) => (
-              <STopAnimeCard
-                key={anime?.mal_id}
-                onClick={() => goToAnimeDetails(anime)}
+      <SSeasonAnimeWrapper>
+        <>
+          <SSeasonAnimeHeader>
+            <div>Seasonal Anime</div>
+            <SSeasonPaginationWrapper>
+              <SSeasonPagination
+                isPage={seasonAnimePage === 1 ? 0 : 1}
+                onClick={() => nextSeasonalAnime("back")}
               >
-                <STopAnimeNumber rankNumber={index + 1}>
-                  {index + 1}
-                </STopAnimeNumber>
-                <STopAnimeImage src={anime?.images?.jpg?.image_url} />
-                <STopAnimeDetailsWrapper>
-                  <STopAnimeTitle>
-                    {anime?.[Title[language]] || anime?.[Title.Japan]}
-                  </STopAnimeTitle>
-                  <STopAnimeDetails>
-                    <STopAnimeScore>
-                      <SRatingImage src={rating} />
-                      <div>{anime?.score}</div>
-                    </STopAnimeScore>
-                    <STopAnimeScore>
-                      <SRatingImage src={score} />
-                      <div>{anime?.scored_by}</div>
-                    </STopAnimeScore>
-                  </STopAnimeDetails>
-                </STopAnimeDetailsWrapper>
-              </STopAnimeCard>
+                {"<"}
+              </SSeasonPagination>
+              <SSeasonPagination
+                isPage={seasonalAnimeData?.pagination?.has_next_page ? 1 : 0}
+                onClick={() => nextSeasonalAnime("forward")}
+              >
+                {">"}
+              </SSeasonPagination>
+            </SSeasonPaginationWrapper>
+          </SSeasonAnimeHeader>
+          <SSeasonAnime>
+            {trailSeasonAnime.map((props, index) => (
+              <SeasonalAnimeHome
+                key={seasonalAnimeData?.data?.[index]?.mal_id}
+                {...{
+                  details: seasonalAnimeData.data?.[index],
+                  style: props,
+                }}
+              />
             ))}
-        </STopAnimeWrapper>
-      )}
+          </SSeasonAnime>
+        </>
+      </SSeasonAnimeWrapper>
+      <STopAnimeWrapper>
+        <div>Top Airing Anime</div>
+        {trailTopAnime.map((props, index) => (
+          <TopAnimeHome
+            key={topAiringAnime?.data?.[index]?.mal_id}
+            {...{
+              details: topAiringAnime?.data?.[index],
+              index,
+              style: props,
+            }}
+          />
+        ))}
+      </STopAnimeWrapper>
     </SHomeWrapper>
   );
 };

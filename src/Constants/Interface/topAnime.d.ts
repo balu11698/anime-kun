@@ -12,7 +12,7 @@ export interface ITopAnimeData {
   scored_by: number;
   images: IImages;
 }
-interface IImages {
+export interface IImages {
   jpg: {
     image_url: string;
     large_image_url: string;

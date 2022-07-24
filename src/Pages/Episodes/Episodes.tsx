@@ -28,7 +28,7 @@ const Episodes = () => {
   return (
     <SEpisodesWrapper>
       {animeEpisodes?.data.map((episode) => (
-        <SEpisodesCard>
+        <SEpisodesCard key={episode?.mal_id}>
           <SEpisodeNumber>{episode?.mal_id}</SEpisodeNumber>
           <SEpisodeDetailsWrapper>
             <div>{episode?.title}</div>

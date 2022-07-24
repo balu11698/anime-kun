@@ -15,6 +15,7 @@ export const SNavBar = styled.div`
 export const SHeaderName = styled.div`
   font-size: 20px;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 `;
 
 export const SLanguageWrapper = styled.div`

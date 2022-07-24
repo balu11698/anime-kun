@@ -3,6 +3,7 @@ import animeDetailsSlice from "./Slice/animeDetails.slice";
 import animeEpisodesSlice from "./Slice/animeEpisodes.slice";
 import apiHandlingSlice from "./Slice/apiHandling.slice";
 import languageSlice from "./Slice/language.slice";
+import seasonalAnimeSlice from "./Slice/seasonalAnime";
 import topAnimeSlice from "./Slice/topAnime.slice";
 const reducer = {
   anime: animeDetailsSlice,
@@ -10,6 +11,7 @@ const reducer = {
   language: languageSlice,
   apiHandling: apiHandlingSlice,
   episodes: animeEpisodesSlice,
+  seasonAnime: seasonalAnimeSlice,
 };
 export const store = configureStore({
   reducer,

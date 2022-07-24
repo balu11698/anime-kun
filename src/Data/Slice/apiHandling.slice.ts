@@ -4,14 +4,29 @@ import {
   isPending,
   isRejected,
 } from "@reduxjs/toolkit";
+import { WritableDraft } from "immer/dist/internal";
 import { ApiStatus } from "../../Constants/Enum";
 
 interface IApiHandling {
   status: string;
+  counter: number;
 }
 
 const initialState: IApiHandling = {
   status: "",
+  counter: 0,
+};
+
+const pendingState = (state: WritableDraft<IApiHandling>) => {
+  state.status = ApiStatus.Pending;
+  state.counter = state.counter + 1;
+};
+
+const fulfilledState = (state: WritableDraft<IApiHandling>) => {
+  state.counter = state.counter - 1;
+  if (state.counter === 0) {
+    state.status = ApiStatus.Success;
+  }
 };
 
 const apiHandlingSlice = createSlice({
@@ -19,12 +34,8 @@ const apiHandlingSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addMatcher(isPending, (state, action) => {
-      state.status = ApiStatus.Pending;
-    });
-    builder.addMatcher(isFulfilled, (state, action) => {
-      state.status = ApiStatus.Success;
-    });
+    builder.addMatcher(isPending, (state, action) => pendingState(state));
+    builder.addMatcher(isFulfilled, (state, action) => fulfilledState(state));
     builder.addMatcher(isRejected, (state, action) => {
       state.status = ApiStatus.Failed;
     });
