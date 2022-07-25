@@ -1,5 +1,4 @@
 import { HashRouter, Outlet, Route, Routes } from "react-router-dom";
-import { createGlobalStyle } from "styled-components";
 import { SContainer } from "./App.styled";
 import Loader from "./Components/Loader/Loader";
 import NavBar from "./Components/NavBar/NavBar";
@@ -10,16 +9,8 @@ import TopAnime from "./Pages/TopAnime/TopAnime";
 import AnimeVideos from "./Pages/Videos/AnimeVideos";
 
 const App = () => {
-  const GlobalStyles = createGlobalStyle`
-  body{
-    font-family:'Poppins', 'Times New Roman', Times, serif;
-    background: #121c20;
-    color: white;
-    -webkit-tap-highlight-color: transparent;
-  }`;
   return (
     <>
-      <GlobalStyles />
       <HashRouter>
         <NavBar />
         <SContainer>
