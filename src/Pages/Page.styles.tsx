@@ -6,7 +6,7 @@ export const SAnimeWrapper = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(150px, 150px));
   grid-gap: 10px;
   justify-content: space-between;
-  margin-block: 8px;
+  margin: 8px 0;
 `;
 
 export const SAnimeCard = styled(animated.div)`

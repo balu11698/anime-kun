@@ -10,7 +10,7 @@ export const SEpisodesWrapper = styled.div`
 
 export const SEpisodesCard = styled(animated.div)`
   background-color: #1b2a30;
-  padding-inline: 10px;
+  padding: 0 10px;
   border-radius: 5px;
   display: flex;
   gap: 10px;

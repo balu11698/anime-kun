@@ -25,7 +25,7 @@ export const STopAnimeCard = styled(animated.div)`
   display: flex;
   height: 75px;
   background-color: #1b2a30;
-  margin-block: 8px;
+  margin: 8px 0;
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;

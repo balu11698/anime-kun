@@ -6,7 +6,7 @@ export const SAnimeDetailsNavWrapper = styled.div`
   gap: 10px;
   background: #1e2d3e;
   border-radius: 5px;
-  padding-inline: 5px;
+  padding: 0px 5px;
 `;
 
 export const SNavLink = styled(NavLink)<{ active: number }>`
