@@ -5,7 +5,7 @@ export const SNavBar = styled.div`
   top: 0;
   height: 50px;
   width: calc(100% - 50px);
-  padding-inline: 25px;
+  padding: 0px 25px;
   background-color: #1e2d3e;
   display: flex;
   align-items: center;
