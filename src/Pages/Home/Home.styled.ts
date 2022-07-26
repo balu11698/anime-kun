@@ -5,13 +5,15 @@ import { topAnimeNumberColour } from "../../Constants/styleConstants";
 export const SHomeWrapper = styled.div`
   display: flex;
   gap: 20px;
-  flex-wrap: wrap;
+  @media (max-width: 1024px) {
+    flex-direction: column;
+  }
 `;
 
 export const STopAnimeWrapper = styled.div`
   width: 25%;
   min-width: 350px;
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     width: 100%;
     min-width: unset;
   }
@@ -82,6 +84,7 @@ export const STopAnimeScore = styled.div`
 export const SRatingImage = styled.img`
   width: 12px;
   height: 12px;
+  margin-bottom: 1px;
 `;
 
 export const SSeasonAnimeWrapper = styled.div`

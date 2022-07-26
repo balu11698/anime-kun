@@ -1,5 +1,5 @@
-import { NavLink } from "react-router-dom";
-import styled from "styled-components";
+import { NavLink } from 'react-router-dom';
+import styled from 'styled-components';
 
 export const SAnimeDetailsNavWrapper = styled.div`
   display: flex;
@@ -17,5 +17,10 @@ export const SNavLink = styled(NavLink)<{ active: number }>`
   &:hover {
     color: #666e76;
   }
-  color: ${(p) => (p.active ? "#4649c5" : "white")};
+  color: ${(p) => (p.active ? '#4649c5' : 'white')};
+`;
+
+export const SAnimeDetailTitle = styled.div`
+  font-size: 20px;
+  height: 30px;
 `;

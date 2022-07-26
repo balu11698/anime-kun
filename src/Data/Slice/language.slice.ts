@@ -6,7 +6,7 @@ interface ILanguage {
 }
 
 const initialState: ILanguage = {
-  name: Language.Japan,
+  name: Language.Japan
 };
 export const languageSlice = createSlice({
   name: "language",
@@ -14,8 +14,8 @@ export const languageSlice = createSlice({
   reducers: {
     changeLanguage: (state, action) => {
       state.name = action.payload;
-    },
-  },
+    }
+  }
 });
 export const { changeLanguage } = languageSlice.actions;
 

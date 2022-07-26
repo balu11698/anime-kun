@@ -1,4 +1,6 @@
+import React from "react";
 import ReactTooltip from "react-tooltip";
+
 interface TooltipProps {
   id: string;
   children: React.ReactNode;
@@ -12,8 +14,7 @@ const Tooltip = ({ id, children }: TooltipProps) => {
         setTimeout(() => {
           ReactTooltip.hide();
         }, 2000);
-      }}
-    >
+      }}>
       {children}
     </ReactTooltip>
   );

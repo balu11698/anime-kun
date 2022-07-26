@@ -5,7 +5,7 @@ import {
   SSideBarItem,
   SSideBarName,
   SSideBarSubName,
-  SSideSubAnimate,
+  SSideSubAnimate
 } from "./SideBar.styles";
 
 interface SideBarProps {
@@ -25,7 +25,7 @@ interface ISideBarSub {
 }
 enum SideBarName {
   Anime = "Anime",
-  Manga = "Manga",
+  Manga = "Manga"
 }
 
 const SideBar = ({ isSideBar }: SideBarProps) => {
@@ -35,14 +35,14 @@ const SideBar = ({ isSideBar }: SideBarProps) => {
       id: 1,
       subMenu: [
         { name: "Top Anime", id: 11, to: "/top-anime" },
-        { name: "Season Anime", id: 12, to: "/season-anime" },
-      ],
+        { name: "Season Anime", id: 12, to: "/season-anime" }
+      ]
     },
     {
       name: SideBarName.Manga,
       id: 2,
-      subMenu: [{ name: "Top Manga", id: 21, to: "/top-manga" }],
-    },
+      subMenu: [{ name: "Top Manga", id: 21, to: "/top-manga" }]
+    }
   ];
   const [subMenuSelected, setSubmenuSelected] = useState<any>({
     ...Object.fromEntries(
@@ -52,27 +52,26 @@ const SideBar = ({ isSideBar }: SideBarProps) => {
         })
       )
     ),
-    selected: "",
+    selected: ""
   });
-  // console.log(subMenuSelected);
   const transitionSideNav = useTransition(isSideBar, {
     from: { opacity: 0, transform: "translate3d(-20px,0,0)" },
     enter: { opacity: 1, transform: "translate3d(0,0,0)" },
     leave: { opacity: 0, transform: "translate3d(20px,0,0)" },
-    config: { ...config.molasses, duration: !isSideBar ? 250 : 500 },
+    config: { ...config.molasses, duration: !isSideBar ? 250 : 500 }
   });
 
   const onItemSelect = (name: SideBarName) => {
     setSubmenuSelected({
       ...subMenuSelected,
       [name]: !subMenuSelected[name],
-      selected: subMenuSelected.selected === name ? "" : name,
+      selected: subMenuSelected.selected === name ? "" : name
     });
   };
 
   return (
     <SSideBar isSideBar={isSideBar}>
-      {transitionSideNav((props, item, menukey) => (
+      {transitionSideNav((props, item) => (
         <SSideBarItem style={props}>
           {item &&
             items.map((menu) => (
@@ -80,18 +79,12 @@ const SideBar = ({ isSideBar }: SideBarProps) => {
                 <SSideBarName
                   onClick={() => {
                     onItemSelect(menu.name);
-                  }}
-                >
+                  }}>
                   {menu.name}
                 </SSideBarName>
                 <SSideSubAnimate
                   opened={subMenuSelected.selected === menu.name ? 1 : 0}
-                  height={
-                    menu?.subMenu?.length !== (0 || undefined)
-                      ? menu?.subMenu?.length
-                      : 0
-                  }
-                >
+                  height={menu?.subMenu?.length !== (0 || undefined) ? menu?.subMenu?.length : 0}>
                   {subMenuSelected.selected === menu.name &&
                     menu?.subMenu?.map((subName) => (
                       <SSideBarSubName key={subName.id} to={subName.to}>

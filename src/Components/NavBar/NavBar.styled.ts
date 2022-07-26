@@ -10,7 +10,7 @@ export const SNavBar = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  z-index: 1;
+  z-index: 2;
 `;
 export const SHamburger = styled.button<{ open: boolean }>`
   left: 2rem;
@@ -23,7 +23,6 @@ export const SHamburger = styled.button<{ open: boolean }>`
   border: none;
   cursor: pointer;
   padding: 0;
-  z-index: 10;
 
   &:focus {
     outline: none;

@@ -1,5 +1,10 @@
 import { animated } from "react-spring";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const opacityAnimation = keyframes`
+  0% { opacity:0; transform : translate3d(-20px,0,0) }
+  100% { opacity: 1;transform : translate3d(0,0,0) }
+ `;
 
 export const SEpisodesWrapper = styled.div`
   display: grid;
@@ -10,10 +15,12 @@ export const SEpisodesWrapper = styled.div`
 
 export const SEpisodesCard = styled(animated.div)`
   background-color: #1b2a30;
-  padding: 0 10px;
+  padding: 4px 10px;
   border-radius: 5px;
   display: flex;
   gap: 10px;
+  animation-name: ${opacityAnimation};
+  animation-duration: 1s;
 `;
 
 export const SEpisodeNumber = styled.div`
@@ -21,7 +28,12 @@ export const SEpisodeNumber = styled.div`
   gap: 10px;
 `;
 
-export const SEpisodeDetailsWrapper = styled.div``;
+export const SEpisodeDetailsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 6px;
+`;
 
 export const SEpisodeDetails = styled.div`
   display: flex;

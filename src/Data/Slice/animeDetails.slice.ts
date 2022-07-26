@@ -9,7 +9,7 @@ interface IAnimeDetailsState {
 
 const initialState: IAnimeDetailsState = {
   details: {},
-  status: "",
+  status: ""
 };
 
 export const getAnimeDetails = createAsyncThunk(
@@ -29,12 +29,12 @@ export const animeDetailsSlice = createSlice({
     },
     [getAnimeDetails.fulfilled.type]: (state, { payload: { data } }: any) => {
       state.status = ApiStatus.Success;
-      state.details = data;
+      state.details[data.data.mal_id] = data;
     },
-    [getAnimeDetails.rejected.type]: (state, { error }: any) => {
+    [getAnimeDetails.rejected.type]: (state) => {
       state.status = ApiStatus.Failed;
-    },
-  },
+    }
+  }
 });
 
 export default animeDetailsSlice.reducer;

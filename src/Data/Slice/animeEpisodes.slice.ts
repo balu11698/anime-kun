@@ -1,43 +1,70 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ApiStatus } from "../../Constants/Enum";
-import { IAnimeEpisodes } from "../../Constants/Interface/animeEpisodes";
+import {
+  IAnimeEpisodesData,
+  IAnimeEpisodesPagination
+} from "../../Constants/Interface/animeEpisodes";
 import { apiServiceGet } from "../ApiService/apiService";
 
 interface IAnimeEpisodesState {
-  details: IAnimeEpisodes;
-  status: string;
+  details: {
+    [x: number | string]: {
+      data: IAnimeEpisodesData[];
+      pagination: IAnimeEpisodesPagination;
+      status: string;
+      currentPage: number;
+    };
+  };
 }
 
 const initialState: IAnimeEpisodesState = {
-  details: { data: [] },
-  status: "",
+  details: {}
 };
 
 export const getAnimeEpisodes = createAsyncThunk(
   "episodes/data",
-  async (mal_id: string | undefined) => {
-    return await apiServiceGet(
-      `https://api.jikan.moe/v4/anime/${mal_id}/episodes`
-    );
+  async (params: Record<string, string | number | undefined>) => {
+    return await apiServiceGet(`https://api.jikan.moe/v4/anime/${params.mal_id}/episodes`, {
+      page: params.page as number
+    });
   }
 );
 
 export const animeEpisodesSlice = createSlice({
   name: "episodes",
   initialState,
-  reducers: {},
-  extraReducers: {
-    [getAnimeEpisodes.pending.type]: (state) => {
-      state.status = ApiStatus.Pending;
+  reducers: {
+    createEpisodeId: (state, { payload }) => {
+      if (!Object.prototype.hasOwnProperty.call(state.details, payload.mal_id)) {
+        state.details[payload.mal_id] = {
+          data: [],
+          pagination: { has_next_page: false, last_visible_page: 1 },
+          status: "",
+          currentPage: payload.page
+        };
+      }
     },
-    [getAnimeEpisodes.fulfilled.type]: (state, { payload: { data } }: any) => {
-      state.status = ApiStatus.Success;
-      state.details = data;
-    },
-    [getAnimeEpisodes.rejected.type]: (state, { error }: any) => {
-      state.status = ApiStatus.Failed;
-    },
+    updateCurrentPage: (state, { payload }) => {
+      state.details[payload.mal_id].currentPage = payload.pageNumber;
+    }
   },
+  extraReducers: {
+    [getAnimeEpisodes.pending.type]: (state, action) => {
+      state.details[action.meta.arg.mal_id].status = ApiStatus.Pending;
+    },
+    [getAnimeEpisodes.fulfilled.type]: (state, action) => {
+      state.details[action.meta.arg.mal_id].data = [
+        ...state.details[action.meta.arg.mal_id].data,
+        ...action.payload.data.data
+      ];
+      state.details[action.meta.arg.mal_id].status = ApiStatus.Success;
+      state.details[action.meta.arg.mal_id].pagination = action.payload.data.pagination;
+      state.details[action.meta.arg.mal_id].currentPage = action.meta.arg.page;
+    },
+    [getAnimeEpisodes.rejected.type]: (state, action) => {
+      state.details[action.meta.arg.mal_id].status = ApiStatus.Failed;
+    }
+  }
 });
-
+export const { createEpisodeId, updateCurrentPage } = animeEpisodesSlice.actions;
 export default animeEpisodesSlice.reducer;

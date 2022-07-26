@@ -1,5 +1,6 @@
 export interface IAnimeEpisodes {
-  data: IAnimeEpisodesData[];
+  details: { data: IAnimeEpisodesData[]; pagination: IAnimeEpisodesPagination };
+  status: string;
 }
 
 export interface IAnimeEpisodesData {
@@ -8,4 +9,9 @@ export interface IAnimeEpisodesData {
   title: string;
   title_romanji: string;
   filler: boolean;
+}
+
+export interface IAnimeEpisodesPagination {
+  has_next_page: boolean;
+  last_visible_page: number;
 }

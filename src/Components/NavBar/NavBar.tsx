@@ -1,10 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Language } from "../../Constants/Enum";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../Data/ReduxHooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../../Data/ReduxHooks/reduxHooks";
 import { changeLanguage } from "../../Data/Slice/language.slice";
 import SideBar from "../SideBar/SideBar";
 import {
@@ -13,7 +10,7 @@ import {
   SLanguage,
   SLanguageWrapper,
   SLeftNav,
-  SNavBar,
+  SNavBar
 } from "./NavBar.styled";
 
 const NavBar = () => {
@@ -22,7 +19,6 @@ const NavBar = () => {
   const dispatch = useAppDispatch();
 
   const [isSideBar, setIsSideBar] = useState(false);
-
   const languageChange = (language: Language) => {
     dispatch(changeLanguage(language));
   };
@@ -40,19 +36,19 @@ const NavBar = () => {
         <SLanguageWrapper>
           <SLanguage
             languageSelected={selectedLanguage === Language.English}
-            onClick={() => languageChange(Language.English)}
-          >
+            onClick={() => languageChange(Language.English)}>
             EN
           </SLanguage>
           <SLanguage
             languageSelected={selectedLanguage === Language.Japan}
-            onClick={() => languageChange(Language.Japan)}
-          >
+            onClick={() => languageChange(Language.Japan)}>
             JP
           </SLanguage>
         </SLanguageWrapper>
       </SNavBar>
-      <SideBar {...{ isSideBar }} />
+      <div>
+        <SideBar {...{ isSideBar }} />
+      </div>
     </>
   );
 };

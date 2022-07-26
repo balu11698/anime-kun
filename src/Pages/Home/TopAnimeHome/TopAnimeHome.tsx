@@ -13,7 +13,7 @@ import {
   STopAnimeImage,
   STopAnimeNumber,
   STopAnimeScore,
-  STopAnimeTitle,
+  STopAnimeTitle
 } from "../Home.styled";
 interface TopAnimeHomeProps {
   details: IAnimeData;
@@ -28,20 +28,19 @@ const TopAnimeHome = ({ details, index, style }: TopAnimeHomeProps) => {
   const transition = useTransition(details?.[Title[language]], {
     from: { opacity: 0 },
     enter: { opacity: 1 },
-    config: config.molasses,
+    config: config.molasses
   });
 
   const goToAnimeDetails = (mal_id: number) => {
-    navigate(`/anime/${mal_id}`);
+    navigate(`/anime/${mal_id}/overview`);
   };
   return (
     <STopAnimeCard
-      key={details.mal_id}
+      key={details?.mal_id}
       onClick={() => goToAnimeDetails(details?.mal_id)}
-      style={style}
-    >
+      style={style}>
       <STopAnimeNumber rankNumber={index + 1}>{index + 1}</STopAnimeNumber>
-      <STopAnimeImage src={details.images?.jpg?.image_url} />
+      <STopAnimeImage src={details?.images?.jpg?.image_url} />
       <STopAnimeDetailsWrapper>
         {transition((styles) => (
           <STopAnimeTitle style={styles}>
@@ -51,11 +50,11 @@ const TopAnimeHome = ({ details, index, style }: TopAnimeHomeProps) => {
         <STopAnimeDetails>
           <STopAnimeScore>
             <SRatingImage src={rating} />
-            <div>{details.score}</div>
+            <div>{details?.score}</div>
           </STopAnimeScore>
           <STopAnimeScore>
             <SRatingImage src={score} />
-            <div>{details.scored_by}</div>
+            <div>{details?.scored_by?.toLocaleString()}</div>
           </STopAnimeScore>
         </STopAnimeDetails>
       </STopAnimeDetailsWrapper>

@@ -1,9 +1,4 @@
-import {
-  createSlice,
-  isFulfilled,
-  isPending,
-  isRejected,
-} from "@reduxjs/toolkit";
+import { createSlice, isFulfilled, isPending, isRejected } from "@reduxjs/toolkit";
 import { WritableDraft } from "immer/dist/internal";
 import { ApiStatus } from "../../Constants/Enum";
 
@@ -14,7 +9,7 @@ interface IApiHandling {
 
 const initialState: IApiHandling = {
   status: "",
-  counter: 0,
+  counter: 0
 };
 
 const pendingState = (state: WritableDraft<IApiHandling>) => {
@@ -34,12 +29,12 @@ const apiHandlingSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addMatcher(isPending, (state, action) => pendingState(state));
-    builder.addMatcher(isFulfilled, (state, action) => fulfilledState(state));
-    builder.addMatcher(isRejected, (state, action) => {
+    builder.addMatcher(isPending, (state) => pendingState(state));
+    builder.addMatcher(isFulfilled, (state) => fulfilledState(state));
+    builder.addMatcher(isRejected, (state) => {
       state.status = ApiStatus.Failed;
     });
-  },
+  }
 });
 
 export default apiHandlingSlice.reducer;

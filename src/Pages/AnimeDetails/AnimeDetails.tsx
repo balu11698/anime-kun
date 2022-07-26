@@ -1,12 +1,9 @@
 import { useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
-import { ApiStatus, Title } from "../../Constants/Enum";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../Data/ReduxHooks/reduxHooks";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Title } from "../../Constants/Enum";
+import { useAppDispatch, useAppSelector } from "../../Data/ReduxHooks/reduxHooks";
 import { getAnimeDetails } from "../../Data/Slice/animeDetails.slice";
-import { SAnimeDetailsNavWrapper, SNavLink } from "./AnimeDetails.styled";
+import { SAnimeDetailsNavWrapper, SAnimeDetailTitle, SNavLink } from "./AnimeDetails.styled";
 
 const AnimeDetails = () => {
   const language = useAppSelector((state) => state.language.name);
@@ -14,7 +11,9 @@ const AnimeDetails = () => {
   const dispatch = useAppDispatch();
   const { id: mal_id } = useParams();
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   useEffect(() => {
+    navigate(`/anime/${mal_id}/overview`);
     dispatch(getAnimeDetails(mal_id));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mal_id]);
@@ -26,17 +25,16 @@ const AnimeDetails = () => {
 
   return (
     <div>
-      {animeDetails?.status === ApiStatus.Success && (
-        <div>{animeDetails?.details?.data?.[Title[language]]} </div>
-      )}
+      <SAnimeDetailTitle>
+        {animeDetails?.details?.data?.[Title[language]] ||
+          animeDetails?.details?.data?.[Title.Japan]}
+      </SAnimeDetailTitle>
+
       <SAnimeDetailsNavWrapper>
-        <SNavLink to="" active={activeLink(`/anime/${mal_id}`)}>
+        <SNavLink to="overview" active={activeLink(`/anime/${mal_id}/overview`)}>
           Overview
         </SNavLink>
-        <SNavLink
-          to="episodes"
-          active={activeLink(`/anime/${mal_id}/episodes`)}
-        >
+        <SNavLink to="episodes" active={activeLink(`/anime/${mal_id}/episodes`)}>
           Episodes
         </SNavLink>
         <SNavLink to="videos" active={activeLink(`/anime/${mal_id}/videos`)}>

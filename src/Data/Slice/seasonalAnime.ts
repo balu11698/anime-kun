@@ -10,17 +10,12 @@ interface ISeasonalAnimeState {
 
 const initialState: ISeasonalAnimeState = {
   now: [],
-  status: "",
+  status: ""
 };
 
-export const getSeasonalAnimeNow = createAsyncThunk(
-  "seasonAnime/now",
-  async (page: number) => {
-    return await apiServiceGet(
-      `https://api.jikan.moe/v4/seasons/now?page=${page}`
-    );
-  }
-);
+export const getSeasonalAnimeNow = createAsyncThunk("seasonAnime/now", async (page: number) => {
+  return await apiServiceGet(`https://api.jikan.moe/v4/seasons/now?page=${page}`);
+});
 
 export const seasonalAnimeSlice = createSlice({
   name: "seasonAnime",
@@ -30,17 +25,14 @@ export const seasonalAnimeSlice = createSlice({
     [getSeasonalAnimeNow.pending.type]: (state) => {
       state.status = ApiStatus.Pending;
     },
-    [getSeasonalAnimeNow.fulfilled.type]: (
-      state,
-      { payload: { data } }: any
-    ) => {
+    [getSeasonalAnimeNow.fulfilled.type]: (state, { payload: { data } }: any) => {
       state.status = ApiStatus.Success;
       state.now[data?.pagination?.current_page] = data;
     },
-    [getSeasonalAnimeNow.rejected.type]: (state, { error }: any) => {
+    [getSeasonalAnimeNow.rejected.type]: (state) => {
       state.status = ApiStatus.Failed;
-    },
-  },
+    }
+  }
 });
 
 export default seasonalAnimeSlice.reducer;

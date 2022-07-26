@@ -9,7 +9,7 @@ interface ITopAnimeState {
     status: string;
   };
   topAnime: {
-    details: { data: IAnimeData[] };
+    details: any;
     status: string;
   };
 }
@@ -17,26 +17,23 @@ interface ITopAnimeState {
 const initialState: ITopAnimeState = {
   topAnimeAiring: {
     details: { data: [] },
-    status: "",
+    status: ""
   },
   topAnime: {
     details: { data: [] },
-    status: "",
-  },
+    status: ""
+  }
 };
 
-export const getTopAnimeAiring = createAsyncThunk(
-  "topAnime/airing",
-  async () => {
-    return await apiServiceGet("https://api.jikan.moe/v4/top/anime", {
-      filter: "airing",
-    });
-  }
-);
+export const getTopAnimeAiring = createAsyncThunk("topAnime/airing", async () => {
+  return await apiServiceGet("https://api.jikan.moe/v4/top/anime", {
+    filter: "airing"
+  });
+});
 
 export const getTopAnime = createAsyncThunk(
   "topAnime/data",
-  async (params: Record<string, string>) => {
+  async (params: Record<string, string | number>) => {
     return await apiServiceGet("https://api.jikan.moe/v4/top/anime", params);
   }
 );
@@ -53,7 +50,7 @@ export const topAnimeSlice = createSlice({
       state.topAnimeAiring.status = ApiStatus.Success;
       state.topAnimeAiring.details = data;
     },
-    [getTopAnimeAiring.rejected.type]: (state, { error }: any) => {
+    [getTopAnimeAiring.rejected.type]: (state) => {
       state.topAnimeAiring.status = ApiStatus.Failed;
     },
     [getTopAnime.pending.type]: (state) => {
@@ -61,12 +58,13 @@ export const topAnimeSlice = createSlice({
     },
     [getTopAnime.fulfilled.type]: (state, { payload: { data } }: any) => {
       state.topAnime.status = ApiStatus.Success;
-      state.topAnime.details = data;
+      state.topAnime.details.pagination = data.pagination;
+      state.topAnime.details.data = [...state.topAnime.details.data, ...data.data];
     },
-    [getTopAnime.rejected.type]: (state, { error }: any) => {
+    [getTopAnime.rejected.type]: (state) => {
       state.topAnime.status = ApiStatus.Failed;
-    },
-  },
+    }
+  }
 });
 
 export default topAnimeSlice.reducer;

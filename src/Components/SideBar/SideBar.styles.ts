@@ -9,6 +9,7 @@ export const SSideBar = styled.div<{ isSideBar: boolean }>`
   background-color: #1f343ce3;
   z-index: 1;
   transition: all 0.5s;
+  z-index: 2;
 `;
 
 export const SSideBarItem = styled(animated.div)`
