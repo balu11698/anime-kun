@@ -6,10 +6,10 @@ import { getAnimeDetails } from "../../Data/Slice/animeDetails.slice";
 import { SAnimeDetailsNavWrapper, SAnimeDetailTitle, SNavLink } from "./AnimeDetails.styled";
 
 const AnimeDetails = () => {
-  const language = useAppSelector((state) => state.language.name);
-  const animeDetails = useAppSelector((state) => state.anime);
-  const dispatch = useAppDispatch();
   const { id: mal_id } = useParams();
+  const language = useAppSelector((state) => state.language.name);
+  const animeDetails = useAppSelector((state) => state.anime.details?.[mal_id as string]?.data);
+  const dispatch = useAppDispatch();
   const { pathname } = useLocation();
   const navigate = useNavigate();
   useEffect(() => {
@@ -26,10 +26,8 @@ const AnimeDetails = () => {
   return (
     <div>
       <SAnimeDetailTitle>
-        {animeDetails?.details?.data?.[Title[language]] ||
-          animeDetails?.details?.data?.[Title.Japan]}
+        {animeDetails?.[Title[language]] || animeDetails?.[Title.Japan]}
       </SAnimeDetailTitle>
-
       <SAnimeDetailsNavWrapper>
         <SNavLink to="overview" active={activeLink(`/anime/${mal_id}/overview`)}>
           Overview

@@ -31,7 +31,8 @@ const AnimeData = ({ data, type }: AnimeDataProps) => {
   const trail = useTrail(data?.length || 0, {
     config: { ...config.stiff, duration: 100 },
     from: { opacity: 0 },
-    to: { opacity: 1 }
+    to: { opacity: 1 },
+    reset: true
   });
   const transition = useTransition(language, {
     from: { opacity: 0 },

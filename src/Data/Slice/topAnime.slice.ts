@@ -20,7 +20,7 @@ const initialState: ITopAnimeState = {
     status: ""
   },
   topAnime: {
-    details: { data: [] },
+    details: { start: {}, tv: {}, movie: {} },
     status: ""
   }
 };
@@ -33,7 +33,7 @@ export const getTopAnimeAiring = createAsyncThunk("topAnime/airing", async () =>
 
 export const getTopAnime = createAsyncThunk(
   "topAnime/data",
-  async (params: Record<string, string | number>) => {
+  async (params: Record<string, string | number | undefined | null>) => {
     return await apiServiceGet("https://api.jikan.moe/v4/top/anime", params);
   }
 );
@@ -56,10 +56,11 @@ export const topAnimeSlice = createSlice({
     [getTopAnime.pending.type]: (state) => {
       state.topAnime.status = ApiStatus.Pending;
     },
-    [getTopAnime.fulfilled.type]: (state, { payload: { data } }: any) => {
+    [getTopAnime.fulfilled.type]: (state, { payload }: any) => {
       state.topAnime.status = ApiStatus.Success;
-      state.topAnime.details.pagination = data.pagination;
-      state.topAnime.details.data = [...state.topAnime.details.data, ...data.data];
+      state.topAnime.details.pagination = payload.data.pagination;
+      state.topAnime.details[payload.config.params.type][payload.data.pagination.current_page] =
+        payload.data.data;
     },
     [getTopAnime.rejected.type]: (state) => {
       state.topAnime.status = ApiStatus.Failed;
