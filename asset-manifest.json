@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/anime-kun/static/css/main.e6c13ad2.css",
-    "main.js": "/anime-kun/static/js/main.a2fb173a.js",
+    "main.js": "/anime-kun/static/js/main.af358b00.js",
     "static/js/787.e370a2ca.chunk.js": "/anime-kun/static/js/787.e370a2ca.chunk.js",
     "static/media/score.svg": "/anime-kun/static/media/score.d64fd8d429f026ca85d3b4f7deb231e8.svg",
     "static/media/rating.svg": "/anime-kun/static/media/rating.6cbd586514d1fc7e505be4da14c7a8b8.svg",
     "index.html": "/anime-kun/index.html",
     "main.e6c13ad2.css.map": "/anime-kun/static/css/main.e6c13ad2.css.map",
-    "main.a2fb173a.js.map": "/anime-kun/static/js/main.a2fb173a.js.map",
+    "main.af358b00.js.map": "/anime-kun/static/js/main.af358b00.js.map",
     "787.e370a2ca.chunk.js.map": "/anime-kun/static/js/787.e370a2ca.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.a2fb173a.js"
+    "static/js/main.af358b00.js"
   ]
 }
