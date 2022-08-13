@@ -20,7 +20,57 @@ const initialState: ITopAnimeState = {
     status: ""
   },
   topAnime: {
-    details: { start: {}, tv: {}, movie: {} },
+    details: {
+      start: {
+        start: {},
+        airing: {},
+        upcoming: {},
+        bypopularity: {},
+        favorite: {}
+      },
+      tv: {
+        start: {},
+        airing: {},
+        upcoming: {},
+        bypopularity: {},
+        favorite: {}
+      },
+      movie: {
+        start: {},
+        airing: {},
+        upcoming: {},
+        bypopularity: {},
+        favorite: {}
+      },
+      ova: {
+        start: {},
+        airing: {},
+        upcoming: {},
+        bypopularity: {},
+        favorite: {}
+      },
+      ona: {
+        start: {},
+        airing: {},
+        upcoming: {},
+        bypopularity: {},
+        favorite: {}
+      },
+      special: {
+        start: {},
+        airing: {},
+        upcoming: {},
+        bypopularity: {},
+        favorite: {}
+      },
+      music: {
+        start: {},
+        airing: {},
+        upcoming: {},
+        bypopularity: {},
+        favorite: {}
+      }
+    },
     status: ""
   }
 };
@@ -59,8 +109,9 @@ export const topAnimeSlice = createSlice({
     [getTopAnime.fulfilled.type]: (state, { payload }: any) => {
       state.topAnime.status = ApiStatus.Success;
       state.topAnime.details.pagination = payload.data.pagination;
-      state.topAnime.details[payload.config.params.type][payload.data.pagination.current_page] =
-        payload.data.data;
+      state.topAnime.details[payload.config.params.type][payload.config.params.filter][
+        payload.data.pagination.current_page
+      ] = payload.data.data;
     },
     [getTopAnime.rejected.type]: (state) => {
       state.topAnime.status = ApiStatus.Failed;

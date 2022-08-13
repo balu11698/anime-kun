@@ -11,6 +11,16 @@ export interface IAnimeData {
   rank: number;
   synopsis: string;
   rating: string;
+  genres: IAnimeGenres[];
+  year: number;
+  season: string;
+  status: string;
+  source: string;
+  trailer: IAnimeTrailer;
+  theme: {
+    openings: [];
+    endings: [];
+  };
 }
 export interface IImages {
   jpg: {
@@ -33,5 +43,25 @@ export interface IPagination {
     count: number;
     total: number;
     per_page: number;
+  };
+}
+
+export interface IAnimeGenres {
+  mal_id: number;
+  name: string;
+  type: string;
+  url: string;
+}
+
+export interface IAnimeTrailer {
+  embed_url: string;
+  url: string;
+  youtube_id: string;
+  images: {
+    image_url: string;
+    large_image_url: string;
+    maximum_image_url: string;
+    medium_image_url: string;
+    small_image_url: string;
   };
 }

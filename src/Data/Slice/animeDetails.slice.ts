@@ -15,7 +15,7 @@ const initialState: IAnimeDetailsState = {
 export const getAnimeDetails = createAsyncThunk(
   "anime/data",
   async (mal_id: string | undefined) => {
-    return await apiServiceGet(`https://api.jikan.moe/v4/anime/${mal_id}`);
+    return await apiServiceGet(`https://api.jikan.moe/v4/anime/${mal_id}/full`);
   }
 );
 

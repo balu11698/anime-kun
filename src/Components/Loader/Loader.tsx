@@ -8,7 +8,7 @@ const Loader = () => {
   return apiHandling === ApiStatus.Pending ? (
     <SLoaderWrapper>
       <SLoader>
-        <HashLoader size={100} color="#66919f" />
+        <HashLoader size={100} color="#122840" />
       </SLoader>
     </SLoaderWrapper>
   ) : (

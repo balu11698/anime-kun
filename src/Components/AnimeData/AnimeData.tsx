@@ -1,13 +1,20 @@
-import { useNavigate } from "react-router-dom";
+import { useMemo } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import { config, useTrail, useTransition } from "react-spring";
-import rating from "../../assets/images/rating.svg";
-import score from "../../assets/images/score.svg";
+
 import { Title, WeebType } from "../../Constants/Enum";
 
 import { IAnimeData } from "../../Constants/Interface";
 
 import { useAppSelector } from "../../Data/ReduxHooks/reduxHooks";
 import { SRatingImage } from "../../Pages/Home/Home.styled";
+import {
+  useStarAnimation,
+  useTrailAnimation,
+  useTransistionAnimation
+} from "../../utils/animation";
+import rating from "../../assets/images/rating.svg";
+import score from "../../assets/images/score.svg";
 import {
   SAnimeCard,
   SAnimeDetails,
@@ -16,59 +23,62 @@ import {
   SAnimeRating,
   SAnimeTitle,
   SAnimeWrapper,
-  SScore
+  SScore,
+  SScoreDetails
 } from "./AnimeData.styles";
 
 interface AnimeDataProps {
   data: IAnimeData[];
   type: WeebType;
+  animationReset: boolean;
 }
 
-const AnimeData = ({ data, type }: AnimeDataProps) => {
+const AnimeData = ({ data, type, animationReset }: AnimeDataProps) => {
   const language = useAppSelector((state) => state.language.name);
-  const navigate = useNavigate();
 
-  const trail = useTrail(data?.length || 0, {
-    config: { ...config.stiff, duration: 100 },
-    from: { opacity: 0 },
-    to: { opacity: 1 },
-    reset: true
-  });
-  const transition = useTransition(language, {
-    from: { opacity: 0 },
-    enter: { opacity: 1 },
-    config: config.molasses
-  });
-
-  const goToAnimeDetails = (mal_id: number) =>
-    type === WeebType.Anime
-      ? navigate(`/anime/${mal_id}/overview`)
-      : navigate(`/manga/${mal_id}/overview`);
+  const starAnimation = useStarAnimation();
+  const trailAnimation = useTrailAnimation(data);
+  const transitionAnimation = useTransistionAnimation(language);
 
   return (
     <SAnimeWrapper>
-      {trail.map((props, index) => (
-        <SAnimeCard
-          key={data?.[index]?.mal_id}
-          style={props}
-          onClick={() => goToAnimeDetails(data?.[index]?.mal_id)}>
+      {trailAnimation.map((props, index) => (
+        <SAnimeCard key={data?.[index]?.mal_id} style={props}>
           <SAnimeDetails>
-            <SAnimeImage src={data?.[index]?.images?.jpg?.image_url} loading="lazy" />
-            <SAnimeRank>#{data?.[index]?.rank}</SAnimeRank>
-            <SAnimeRating>
-              <SScore>
-                <SRatingImage src={rating} />
-                <div>{data?.[index]?.score}</div>
-              </SScore>
-              <SScore>
-                <SRatingImage src={score} />
-                <div>{data?.[index]?.scored_by?.toLocaleString()}</div>
-              </SScore>
-            </SAnimeRating>
+            <NavLink
+              to={
+                type === WeebType.Anime
+                  ? `/anime/${data?.[index]?.mal_id}/overview`
+                  : `/manga/${data?.[index]?.mal_id}/overview`
+              }>
+              <SAnimeImage
+                src={
+                  data?.[index]?.images?.jpg?.large_image_url ||
+                  data?.[index]?.images?.jpg?.image_url
+                }
+                loading="lazy"
+                alt={rating}
+              />
+            </NavLink>
+            {data?.[index]?.rank && <SAnimeRank>#{data?.[index]?.rank}</SAnimeRank>}
+            {(data?.[index]?.score || data?.[index]?.scored_by) && (
+              <SAnimeRating>
+                <SScore>
+                  <SRatingImage src={rating} style={starAnimation} />
+                  <SScoreDetails>{data?.[index]?.score}</SScoreDetails>
+                </SScore>
+                <SScore>
+                  <SRatingImage src={score} />
+                  <div>{data?.[index]?.scored_by?.toLocaleString()}</div>
+                </SScore>
+              </SAnimeRating>
+            )}
           </SAnimeDetails>
-          {transition((styles) => (
-            <SAnimeTitle style={styles}>
-              {data?.[index]?.[Title?.[language]] || data?.[index]?.[Title.Japan]}
+          {transitionAnimation((styles) => (
+            <SAnimeTitle
+              style={styles}
+              title={data?.[index]?.[Title?.[language]] || data?.[index]?.[Title.Japanese]}>
+              {data?.[index]?.[Title?.[language]] || data?.[index]?.[Title.Japanese]}
             </SAnimeTitle>
           ))}
         </SAnimeCard>

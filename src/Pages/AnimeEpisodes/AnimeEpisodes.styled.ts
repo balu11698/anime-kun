@@ -1,7 +1,7 @@
 import { animated } from "react-spring";
 import styled, { keyframes } from "styled-components";
 
-const opacityAnimation = keyframes`
+export const opacityAnimation = keyframes`
   0% { opacity:0; transform : translate3d(-20px,0,0) }
   100% { opacity: 1;transform : translate3d(0,0,0) }
  `;
@@ -14,7 +14,7 @@ export const SEpisodesWrapper = styled.div`
 `;
 
 export const SEpisodesCard = styled(animated.div)`
-  background-color: #1b2a30;
+  background-color: ${(p) => p.theme?.cardBackgroundColor};
   padding: 4px 10px;
   border-radius: 5px;
   display: flex;

@@ -11,7 +11,16 @@ interface ITopMangaState {
 
 const initialState: ITopMangaState = {
   topManga: {
-    details: { data: [] },
+    details: {
+      start: {},
+      manga: {},
+      novel: {},
+      lightnovel: {},
+      oneshot: {},
+      doujin: {},
+      manhwa: {},
+      manhua: {}
+    },
     status: ""
   }
 };
@@ -31,10 +40,11 @@ export const topMangaSlice = createSlice({
     [getTopManga.pending.type]: (state) => {
       state.topManga.status = ApiStatus.Pending;
     },
-    [getTopManga.fulfilled.type]: (state, { payload: { data } }: any) => {
+    [getTopManga.fulfilled.type]: (state, { payload }) => {
       state.topManga.status = ApiStatus.Success;
-      state.topManga.details.pagination = data.pagination;
-      state.topManga.details.data = [...state.topManga.details.data, ...data.data];
+      state.topManga.details.pagination = payload.data.pagination;
+      state.topManga.details[payload.config.params.type][payload.data.pagination.current_page] =
+        payload.data.data;
     },
     [getTopManga.rejected.type]: (state) => {
       state.topManga.status = ApiStatus.Failed;

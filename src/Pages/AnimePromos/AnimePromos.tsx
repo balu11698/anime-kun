@@ -1,27 +1,30 @@
+import { copyFile } from "fs";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { IAnimeVideos } from "../../Constants/Interface/animeVideos";
+import { IAnimePromo } from "../../Constants/Interface/animePromo";
 import { useAppDispatch, useAppSelector } from "../../Data/ReduxHooks/reduxHooks";
-import { getAnimeVideos } from "../../Data/Slice/animeVideos.slice";
+import { getRecentPromos } from "../../Data/Slice/animePromos.slice";
 import { SOverviewVideo } from "../Overview/Overview.styled";
-import { SAnimeVideosWrapper } from "./AnimeVideos.styled";
+import { SAnimeVideosWrapper } from "../Videos/AnimeVideos.styled";
 
-const AnimeVideos = () => {
-  const { id: mal_id } = useParams();
-  const animeEpisodes: IAnimeVideos = useAppSelector(
-    (state) => state.animeVideos.details[mal_id as string]
-  );
+const AnimePromos = () => {
+  const animePromos: IAnimePromo[] = useAppSelector((state) => state.animePromos.details);
+
   const dispatch = useAppDispatch();
+
   useEffect(() => {
-    animeEpisodes === undefined && dispatch(getAnimeVideos(mal_id));
-  }, [mal_id]);
+    animePromos.length === 0 && dispatch(getRecentPromos());
+  }, []);
+
+  console.log(animePromos);
 
   return (
     <SAnimeVideosWrapper>
-      {animeEpisodes?.promo?.map((video) => (
+      {animePromos?.map((video) => (
         <SOverviewVideo key={video?.trailer?.youtube_id}>
+          <div>{video.entry.title}</div>
           <div>{video.title}</div>
           <iframe
+            loading="lazy"
             style={{ borderRadius: "8px" }}
             src={`https://www.youtube.com/embed/${video.trailer?.youtube_id}`}
             frameBorder="0"
@@ -34,4 +37,4 @@ const AnimeVideos = () => {
   );
 };
 
-export default AnimeVideos;
+export default AnimePromos;

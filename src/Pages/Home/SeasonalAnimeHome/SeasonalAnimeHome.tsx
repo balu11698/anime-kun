@@ -50,7 +50,9 @@ const SeasonalAnimeHome = ({
           </SSeasonPagination>
         </SSeasonPaginationWrapper>
       </SSeasonAnimeHeader>
-      <AnimeData data={seasonalAnimeData?.data} type={WeebType.Anime} />
+      <AnimeData
+        {...{ data: seasonalAnimeData?.data, type: WeebType.Anime, animationReset: false }}
+      />
     </>
   );
 };

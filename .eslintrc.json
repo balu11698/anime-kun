@@ -27,6 +27,7 @@
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "no-unused-vars": "off",
-    "no-prototype-builtins": "off"
+    "no-prototype-builtins": "off",
+    "react/no-unescaped-entities": 0
   }
 }

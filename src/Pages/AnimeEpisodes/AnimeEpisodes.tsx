@@ -17,7 +17,7 @@ import {
   SEpisodeRating,
   SEpisodesCard,
   SEpisodesWrapper
-} from "./Episodes.styled";
+} from "./AnimeEpisodes.styled";
 
 const Episodes = () => {
   const { id: mal_id } = useParams();

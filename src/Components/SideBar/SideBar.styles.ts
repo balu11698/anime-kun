@@ -6,9 +6,9 @@ export const SSideBar = styled.div<{ isSideBar: boolean }>`
   height: calc(100vh - 50px);
   width: ${(p) => (p.isSideBar ? "200px" : 0)};
   position: fixed;
-  background-color: #1f343ce3;
+  background-color: ${(p) => p.theme.sideBarBackgroundColor};
   z-index: 1;
-  transition: all 0.5s;
+  transition: width 0.5s;
   z-index: 2;
 `;
 
@@ -18,17 +18,26 @@ export const SSideBarItem = styled(animated.div)`
 `;
 
 export const SSideBarName = styled(animated.div)`
-  margin: 10px;
+  margin: 5px;
+  padding: 5px;
+  background: ${(p) => p.theme?.menuBackgroundColor};
+  border-radius: 8px;
   white-space: nowrap;
   cursor: pointer;
 `;
 
 export const SSideBarSubName = styled(NavLink)`
   text-decoration: none;
-  color: white;
-  margin: 10px 10px 10px 20px;
+  color: ${(p) => p.theme?.color};
+  margin: 5px 10px;
+  padding: 5px;
+  background: ${(p) => p.theme?.menuBackgroundColor};
+  border-radius: 8px;
   white-space: nowrap;
   overflow: hidden;
+  &[class*="active"] {
+    color: #8d8dd5;
+  }
 `;
 
 export const SSideSubAnimate = styled(animated.div)<{

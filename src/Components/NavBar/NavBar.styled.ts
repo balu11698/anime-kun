@@ -6,11 +6,11 @@ export const SNavBar = styled.div`
   height: 50px;
   width: calc(100% - 50px);
   padding: 0px 25px;
-  background-color: #1e2d3e;
+  background-color: ${(p) => p.theme?.headerColor};
   display: flex;
   align-items: center;
   justify-content: space-between;
-  z-index: 2;
+  z-index: 10;
 `;
 export const SHamburger = styled.button<{ open: boolean }>`
   left: 2rem;
@@ -31,9 +31,9 @@ export const SHamburger = styled.button<{ open: boolean }>`
   div {
     width: 2rem;
     height: 0.25rem;
-    background: #7f7f7f;
+    background: ${(p) => p.theme?.navBarIconColor};
     border-radius: 10px;
-    transition: all 0.3s linear;
+    transition: transform 0.3s linear;
     position: relative;
     transform-origin: 1px;
     :first-child {
@@ -71,11 +71,11 @@ export const SLanguageWrapper = styled.div`
 export const SLanguage = styled.div<{
   languageSelected: boolean;
 }>`
-  background: ${(p) => p.languageSelected && "#4649c5"};
+  background: ${(p) => p.languageSelected && p.theme.activeButtonColor};
   padding: 5px;
   cursor: pointer;
   border-radius: 5px;
   :hover {
-    background-color: ${(p) => !p.languageSelected && "#666e76"};
+    background-color: ${(p) => !p.languageSelected && p.theme?.onHoverButtonColor};
   }
 `;

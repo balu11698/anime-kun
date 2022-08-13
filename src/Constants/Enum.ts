@@ -6,11 +6,11 @@ export enum ApiStatus {
 
 export enum Language {
   English = "English",
-  Japan = "Japan"
+  Japan = "Japanese"
 }
 
 export enum Title {
-  Japan = "title",
+  Japanese = "title",
   English = "title_english"
 }
 

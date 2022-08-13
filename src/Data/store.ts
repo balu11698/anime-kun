@@ -1,6 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
+import animeCharactersSlice from "./Slice/animeCharacters.slice";
 import animeDetailsSlice from "./Slice/animeDetails.slice";
 import animeEpisodesSlice from "./Slice/animeEpisodes.slice";
+import animeGenreSlice from "./Slice/animeGenre.slice";
+import animePromosSlice from "./Slice/animePromos.slice";
+import animeSearchSlice from "./Slice/animeSearch.slice";
+import animeVideosSlice from "./Slice/animeVideos.slice";
 import apiHandlingSlice from "./Slice/apiHandling.slice";
 import languageSlice from "./Slice/language.slice";
 import seasonalAnimeSlice from "./Slice/seasonalAnime";
@@ -13,7 +18,12 @@ const reducer = {
   topAnime: topAnimeSlice,
   topManga: topMangaSlice,
   episodes: animeEpisodesSlice,
-  seasonAnime: seasonalAnimeSlice
+  animeVideos: animeVideosSlice,
+  animeCharacters: animeCharactersSlice,
+  animeGenres: animeGenreSlice,
+  animeSearch: animeSearchSlice,
+  seasonAnime: seasonalAnimeSlice,
+  animePromos: animePromosSlice
 };
 export const store = configureStore({
   reducer,

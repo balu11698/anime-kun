@@ -2,12 +2,15 @@ import React from "react";
 import ReactSelect, { StylesConfig } from "react-select";
 
 interface CustomSelectProps {
-  options: Record<string, string>[];
+  options: any;
   labelName: string;
   valueName: string;
   defaultValue?: any;
+  value?: any;
   setValue: React.Dispatch<React.SetStateAction<any>>;
   isClearable?: boolean;
+  placeholder?: string;
+  isMulti?: boolean;
 }
 
 const CustomSelect = ({
@@ -16,8 +19,12 @@ const CustomSelect = ({
   valueName,
   defaultValue,
   setValue,
-  isClearable
+  isClearable,
+  placeholder,
+  value,
+  isMulti
 }: CustomSelectProps) => {
+  console.log([defaultValue]);
   const onMenuOpen = () => {
     setTimeout(() => {
       const selectedEl = document.getElementsByClassName("MyDropdown__option--is-selected")[0];
@@ -28,29 +35,38 @@ const CustomSelect = ({
   };
 
   const handleChange = (event: any) => {
-    // Overwrite the event with your own object if it doesn't exist
+    console.log(event);
     if (!event) {
-      setValue("start");
+      setValue(value);
     } else {
-      setValue(event[valueName]);
+      if (isMulti) {
+        setValue(event?.map((a: Record<string, string | number>) => a.mal_id).join());
+      } else {
+        setValue(event[valueName]);
+      }
     }
   };
 
-  const customStyles: StylesConfig<Record<string, string>[], false> = {
+  const customStyles: StylesConfig<Record<string, string>[], any> = {
     option: (provided, state) => ({
       ...provided,
       // borderBottom: '1px dotted pink',
       color: state.isSelected ? "white" : "black",
-      backgroundColor: state.isSelected ? "#494caf" : "white"
+      backgroundColor: state.isSelected ? "#494caf" : "white",
+      ":hover": {
+        backgroundColor: state.isFocused ? "#707185" : ""
+      }
     }),
-    menuList: (base) => ({
+    menuList: (base, state) => ({
       ...base,
+
       "::-webkit-scrollbar-track": {
         boxShadow: " inset 0 0 6px rgba(0, 0, 0, 0.3)",
         backgroundColor: "#f5f5f5"
       },
       "::-webkit-scrollbar": {
         width: " 3px",
+        height: "3px",
         backgroundColor: " #F5F5F5"
       },
       " ::-webkit-scrollbar-thumb": {
@@ -58,7 +74,7 @@ const CustomSelect = ({
       }
     }),
     menu: (provided) => ({ ...provided, zIndex: 2 }),
-    control: (base) => ({
+    control: (base, state) => ({
       ...base,
       height: 36,
       minHeight: 36
@@ -78,16 +94,18 @@ const CustomSelect = ({
   return (
     <ReactSelect
       options={options}
+      isMulti={isMulti}
       menuPlacement="auto"
       styles={customStyles}
-      value={defaultValue}
       getOptionLabel={(option) => option[labelName]}
       getOptionValue={(option) => option[valueName]}
+      defaultValue={defaultValue}
       onChange={handleChange}
       onMenuOpen={onMenuOpen}
       className={"MyDropdown"}
       classNamePrefix={"MyDropdown"}
       isClearable={isClearable}
+      placeholder={placeholder}
     />
   );
 };

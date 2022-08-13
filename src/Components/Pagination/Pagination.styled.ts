@@ -17,20 +17,24 @@ export const SPagination = styled(Pagination)`
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  background: #1e2d3e;
+  background: ${(p) => p.theme?.cardBackgroundColor};
   padding: 8px 20px;
   border-radius: 5px;
   margin: unset;
+  justify-content: center;
   > li > a {
     background-color: blue;
     border-radius: 5px;
-    background-color: #494caf;
+    background-color: ${(p) => p.theme?.nonActiveButtonColor};
     border-radius: 5px;
     padding: 0px 6px;
     cursor: pointer;
+    :hover {
+      background-color: ${(p) => p.theme?.onHoverButtonColor};
+    }
   }
   > li[class*="active"] > a {
-    background-color: #707185;
+    background-color: ${(p) => p.theme?.activeButtonColor};
   }
   > li:last-child > div {
     display: flex;

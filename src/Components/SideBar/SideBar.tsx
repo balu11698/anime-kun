@@ -13,7 +13,7 @@ interface SideBarProps {
 }
 
 interface ISideBar {
-  name: SideBarName;
+  name: SideBarName | any;
   id: number;
   subMenu?: ISideBarSub[];
 }
@@ -34,8 +34,10 @@ const SideBar = ({ isSideBar }: SideBarProps) => {
       name: SideBarName.Anime,
       id: 1,
       subMenu: [
-        { name: "Top Anime", id: 11, to: "/top-anime" },
-        { name: "Season Anime", id: 12, to: "/season-anime" }
+        { name: "Top Anime", id: 11, to: "top-anime" },
+        { name: "Season Anime", id: 12, to: "season-anime" },
+        { name: "Genre", id: 13, to: "anime-genre" },
+        { name: "Recent Promos", id: 14, to: "recent-promos" }
       ]
     },
     {
@@ -54,6 +56,7 @@ const SideBar = ({ isSideBar }: SideBarProps) => {
     ),
     selected: ""
   });
+
   const transitionSideNav = useTransition(isSideBar, {
     from: { opacity: 0, transform: "translate3d(-20px,0,0)" },
     enter: { opacity: 1, transform: "translate3d(0,0,0)" },
@@ -68,6 +71,8 @@ const SideBar = ({ isSideBar }: SideBarProps) => {
       selected: subMenuSelected.selected === name ? "" : name
     });
   };
+
+  console.log(subMenuSelected);
 
   return (
     <SSideBar isSideBar={isSideBar}>
@@ -85,12 +90,12 @@ const SideBar = ({ isSideBar }: SideBarProps) => {
                 <SSideSubAnimate
                   opened={subMenuSelected.selected === menu.name ? 1 : 0}
                   height={menu?.subMenu?.length !== (0 || undefined) ? menu?.subMenu?.length : 0}>
-                  {subMenuSelected.selected === menu.name &&
-                    menu?.subMenu?.map((subName) => (
-                      <SSideBarSubName key={subName.id} to={subName.to}>
-                        {subName?.name}
-                      </SSideBarSubName>
-                    ))}
+                  {/* {subMenuSelected.selected === menu.name && */}
+                  {menu?.subMenu?.map((subName) => (
+                    <SSideBarSubName key={subName.id} to={subName.to}>
+                      {subName?.name}
+                    </SSideBarSubName>
+                  ))}
                 </SSideSubAnimate>
               </div>
             ))}

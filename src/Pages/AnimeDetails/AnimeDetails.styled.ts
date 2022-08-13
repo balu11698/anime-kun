@@ -4,10 +4,10 @@ import styled from "styled-components";
 export const SAnimeDetailsNavWrapper = styled.div`
   display: flex;
   gap: 10px;
-  background: #1e2d3e;
+  background: ${(p) => p.theme?.cardBackgroundColor};
   border-radius: 5px;
   padding: 0px 5px;
-  margin-top: 6px;
+  margin: 8px 0;
 `;
 
 export const SNavLink = styled(NavLink)<{ active: number }>`
@@ -16,9 +16,9 @@ export const SNavLink = styled(NavLink)<{ active: number }>`
     color: none;
   }
   &:hover {
-    color: #666e76;
+    color: ${(p) => p.theme?.onHoverButtonColor};
   }
-  color: ${(p) => (p.active ? "#4649c5" : "white")};
+  color: ${(p) => (p.active ? p.theme?.activeButtonColor : p.theme?.color)};
 `;
 
 export const SAnimeDetailTitle = styled.div`

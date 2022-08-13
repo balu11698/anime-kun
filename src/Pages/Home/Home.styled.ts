@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import { animated } from "react-spring";
 import styled from "styled-components";
 import { topAnimeNumberColour } from "../../Constants/styleConstants";
@@ -5,6 +6,7 @@ import { topAnimeNumberColour } from "../../Constants/styleConstants";
 export const SHomeWrapper = styled.div`
   display: flex;
   gap: 20px;
+  min-height: calc(100vh - 90px);
   @media (max-width: 1024px) {
     flex-direction: column;
   }
@@ -26,15 +28,15 @@ export const STopAnimeHeader = styled.div`
 export const STopAnimeCard = styled(animated.div)`
   display: flex;
   height: 75px;
-  background-color: #1b2a30;
+  background-color: ${(p) => p.theme.cardBackgroundColor};
   margin: 8px 0;
   border-radius: 5px;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
   backface-visibility: hidden;
   -webkit-font-smoothing: subpixel-antialiased;
   :hover {
-    transform: translateZ(0) scale(1.05);
+    transform: translateZ(0) scale(1.03);
   }
 `;
 
@@ -69,7 +71,7 @@ export const STopAnimeTitle = styled(animated.div)`
 `;
 
 export const STopAnimeDetails = styled.div`
-  color: #ffffff80;
+  color: ${(p) => p.theme?.lightTextColor};
   display: flex;
   align-items: center;
   gap: 8px;
@@ -81,7 +83,7 @@ export const STopAnimeScore = styled.div`
   gap: 4px;
   width: 45px;
 `;
-export const SRatingImage = styled.img`
+export const SRatingImage = styled(animated.img)`
   width: 12px;
   height: 12px;
   margin-bottom: 1px;
@@ -105,4 +107,9 @@ export const SSeasonPaginationWrapper = styled.div`
 export const SSeasonPagination = styled.div<{ isPage: number }>`
   color: ${(p) => !p.isPage && "#666e76"};
   cursor: ${(p) => p.isPage && "pointer"};
+`;
+
+export const STopAnimeNavLink = styled(NavLink)`
+  text-decoration: none;
+  color: inherit;
 `;
