@@ -29,7 +29,7 @@ const Home = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [seasonAnimePage]);
 
-  const trailTopAnime = useTrail(topAiringAnime?.data?.slice(0, 10).length, {
+  const trailTopAnime = useTrail(topAiringAnime?.data?.slice(0, 10)?.length || 0, {
     config: { ...config.stiff },
     from: { opacity: 0 },
     to: { opacity: 1 }

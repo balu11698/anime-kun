@@ -72,8 +72,6 @@ const SideBar = ({ isSideBar }: SideBarProps) => {
     });
   };
 
-  console.log(subMenuSelected);
-
   return (
     <SSideBar isSideBar={isSideBar}>
       {transitionSideNav((props, item) => (

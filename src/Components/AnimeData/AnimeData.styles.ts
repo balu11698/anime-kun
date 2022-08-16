@@ -28,9 +28,9 @@ export const SAnimeDetails = styled(animated.div)`
   cursor: pointer;
   image-rendering: optimizeSpeed;
   image-rendering: -webkit-optimize-contrast;
-  /* :hover {
+  :hover {
     transform: translateZ(0) scale(1.05);
-  } */
+  }
 `;
 
 export const SAnimeImage = styled.img`
@@ -78,4 +78,6 @@ export const SAnimeTitle = styled(animated.div)`
   display: -webkit-box;
 `;
 
-export const SScoreDetails = styled.div``;
+export const SScoreDetails = styled.div`
+  display: flex;
+`;
